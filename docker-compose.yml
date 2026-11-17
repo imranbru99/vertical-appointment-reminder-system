@@ -1,0 +1,56 @@
+services:
+  app:
+    build: .
+    container_name: appointremind-app
+    ports:
+      - "8080:8000"
+    environment:
+      APP_NAME: "Vertical Appointment & Reminder System"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8080
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: appointremind
+      DB_USERNAME: appointremind
+      DB_PASSWORD: secret
+      MODULE_APPOINTMENTS: "true"
+      MODULE_SCHEDULING: "true"
+      MODULE_REMINDERS: "true"
+      MODULE_WAITLIST: "true"
+      MODULE_NO_SHOW: "true"
+      MODULE_SERVICES: "true"
+      MODULE_PROVIDERS: "true"
+      MODULE_CLIENT_PORTAL: "true"
+      MODULE_AI_SCHEDULING: "true"
+      MODULE_PDF_EXPORTS: "true"
+      MODULE_CATALOG_SCRAPE: "false"
+      MODULE_ATTENDANCE_OPS: "false"
+      MODULE_SPEED_OPTIMIZER: "true"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+    command: >
+      sh -c "composer install --no-interaction &&
+             php artisan key:generate --force &&
+             php artisan migrate --force &&
+             php artisan db:seed --force &&
+             php artisan serve --host=0.0.0.0 --port=8000"
+
+  mysql:
+    image: mysql:8.4
+    container_name: appointremind-mysql
+    environment:
+      MYSQL_DATABASE: appointremind
+      MYSQL_USER: appointremind
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    ports:
+      - "3307:3306"
+    volumes:
+      - appointremind_mysql:/var/lib/mysql
+
+volumes:
+  appointremind_mysql:

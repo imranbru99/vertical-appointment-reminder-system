@@ -1,0 +1,23 @@
+{
+    "name": "imrandevbd/laravel-admin-panel",
+    "description": "Local Laravel 13 compatibility shim for laravel-admin-panel (upstream targets illuminate ^11|^12).",
+    "type": "library",
+    "version": "dev-main",
+    "license": "MIT",
+    "authors": [{"name": "Imran Ahmed", "email": "me@imrandev.bd", "homepage": "https://imrandev.bd"}],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0|^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ImranDevBd\\LaravelAdminPanel\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["ImranDevBd\\LaravelAdminPanel\\ServiceProvider"]
+        }
+    },
+    "minimum-stability": "dev"
+}
